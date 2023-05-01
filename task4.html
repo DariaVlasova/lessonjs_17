@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        Склад. База товарів, які зберігаються на складі: назва товару, одиниця
+        виміру, кількість, фірма виробник (назва, реєстраційний номер).
+        Організувати реєстрацію/відвантаження товарів, фільтрація за назвою
+        товару, фільтрація за назвою фірми
+      </h1>
+      <a class="button" href="./index.html">Повернутись до задач</a>
+      <script>
+        class Product {
+          constructor(title, unit, quantity, manufacturer) {
+            this.title = title;
+            this.unit = unit;
+            this.quantity = quantity;
+            this.manufacturer = manufacturer;
+          }
+          toString() {
+            return `${this.title},${this.unit},${this.quantity},${this.manufacturer}`;
+          }
+        }
+        class Manufacturer {
+          constructor(name, registerName) {
+            this.name = name;
+            this.registerName = registerName;
+          }
+          toString() {
+            return `${this.name},${this.registerName}`;
+          }
+        }
+        class GoodsBase {
+          constructor() {
+            this.products = [];
+          }
+          registerProduct(
+            title,
+
+            quantity,
+            unit,
+            manufacturerName,
+            manufacturerNumber
+          ) {
+            const manufacturer = new Manufacturer(
+              manufacturerName,
+              manufacturerNumber
+            );
+            const product = new Product(title, quantity, unit, manufacturer);
+            this.products.push(product);
+          }
+          shipmentOfGoods(name, quantityToShip) {
+            const product = this.products.find(
+              (product) => product.name === name
+            );
+            if (product && product.quantity >= quantityToShip) {
+              product.quantity -= quantityToShip;
+              return true;
+            }
+            return false;
+          }
+          filterProductsByName(prodTitle) {
+            return this.products.filter(
+              (product) => product.title === prodTitle
+            );
+          }
+          filterProductsByManufacturer(manufacturerName) {
+            return this.products.filter(
+              (product) => product.manufacturer.name === manufacturerName
+            );
+          }
+          toString() {
+            return this.products
+              .map((product) => product.toString())
+              .join("\n");
+          }
+        }
+        const goodsBase = new GoodsBase();
+        //реєстрація товарів на складі
+        goodsBase.registerProduct("Вафлі", 30, "уп", "Barilla", "1111111411");
+        goodsBase.registerProduct("Чай", 20, "уп", "Java", "2222222422");
+        goodsBase.registerProduct(
+          "Макарони",
+          40,
+          "уп",
+          "Barilla",
+          "3333333433"
+        );
+        //вивід усіх товарів на складі
+        console.log(`Усі товари на складі:`);
+        console.log(goodsBase.toString());
+        //фільтрація товарів за назвою
+        console.log('Фільтрація товарів за назвою "Чай"');
+        console.log(goodsBase.filterProductsByName("Чай"));
+        //фільтрація товарів за виробником
+        console.log('Фільтрація товарів за виробником "Barilla"');
+        console.log(goodsBase.filterProductsByManufacturer("Barilla"));
+      </script>
+    </div>
+  </body>
+</html>

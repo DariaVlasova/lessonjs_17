@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css"> 
+</head>
+<body>
+    <div class="container">
+    <h1>
+Створити клас, що дозволяє виконувати такі операції над масивами: 
+знаходження кількості додатних, кількості від’ємних,
+ кількість входжень деякого числа (статичні методи)
+</h1>
+    <a href="./index.html">Повернутись до задач</a>
+  <script>
+  class Calculator{
+    constructor(array){
+      this.array=array
+    }
+    static getPositives(arr){
+        return arr.reduce((prevValue,el)=>(el>0?prevValue+1:prevValue),0)
+    }
+    static getNegative(arr){
+        return arr.reduce((prevValue,el)=>(el<0?prevValue+1:prevValue),0)
+  }
+  static getCountOfValue(arr,value){
+    return arr.reduce((prevValue,el)=>(el===value?prevValue+1:prevValue),0)
+  }
+  toString(number){
+    return `Кількість додатних ${Calculator.getPositives(this.array)}<br>
+    кількість від'ємних ${Calculator.getNegative(this.array)}<br>
+    кількість входжень числа ${Calculator.getCountOfValue(this.array,number)}`
+  }
+}
+let p= new Calculator([1,2,3,3,3,3,3,4,5,6,7,8,9,-1,-2,-3,-4,-5,-6,-7,-8,-9])
+document.write(p.toString(3))
+ </script>
+     
+   
+</body>
+</html>

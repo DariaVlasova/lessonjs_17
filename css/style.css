@@ -1,0 +1,70 @@
+tr {
+}
+td {
+  outline: 1px solid black;
+  padding: 10px 10px;
+}
+td.title {
+  font-size: 24px;
+  font-weight: 800;
+}
+h1 {
+  color: rgb(45, 219, 205);
+  text-align: center;
+  padding: 40px 30px;
+}
+table {
+  margin: 0 auto;
+  background-color: wheat;
+
+  margin-left: 40px;
+}
+tbody {
+}
+a {
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: 700;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: rgb(103, 107, 107);
+  margin: 0 auto;
+  display: flex;
+  width: 400px;
+  margin-bottom: 20px;
+  color: rgb(209, 193, 169);
+  outline: 1px solid grey;
+}
+a:hover {
+  transition: all 0.3s ease 0s;
+  box-shadow: 0px 1px 2px 0px rgba(0, 255, 255, 0.7),
+    1px 2px 4px 0px rgba(0, 255, 255, 0.7),
+    2px 4px 8px 0px rgba(0, 255, 255, 0.7),
+    2px 4px 16px 0px rgba(0, 255, 255, 0.7);
+}
+
+.container {
+  background-color: rgb(121, 117, 117);
+  margin: 0 auto;
+  padding: 10px 50px;
+}
+.title {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 10px 10px;
+}
+div {
+  font-size: 18px;
+  font-weight: 800;
+  padding: 15px 0px;
+}
+.product {
+  display: flex;
+  flex-direction: column;
+}
+p,
+ul {
+  color: wheat;
+}
+img {
+}

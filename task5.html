@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        Особиста бібліотека. Картотека домашньої бібліотеки: дані книги
+        (автори(піб, рік народження, короткий опис), назва книги, жанр,
+        видавництво(назва, реєстраційний номер, рік засування)). Реалізувати
+        розділи бібліотеки (спеціальна література, хобі, домашнє господарство і
+        т.д.), походження книги і наявність на даний час. Організувати
+        додавання/вилучення книг та вибір книг за назвою, за ПІБ автора, за
+        видавництвом.
+      </h1>
+      <script>
+        class Author {
+          constructor(initData) {
+            Object.assign(this, initData);
+          }
+          toString() {
+            return `<br>${this.name},${this.birthYear},${this.description}`;
+          }
+        }
+        class Publishing {
+          constructor(initData) {
+            Object.assign(this, initData);
+          }
+          toString() {
+            return `<b>${this.companyName},${this.regNumber},${this.yearPublication}`;
+          }
+        }
+        class LibrarySection {
+          constructor(initData) {
+            Object.assign(this, initData);
+            this.ListLibrarySection = {};
+          }
+          toString() {
+            return `${this.title}`;
+          }
+        }
+        class Book {
+          static counter = 0;
+          constructor(initData) {
+            Object.assign(this, initData);
+            this.regNumber = ++Book.counter;
+          }
+          toString() {
+            return `<br><br>
+                Library number-${this.regNumber},
+                ${this.author},<br>
+                ${this.title},<br>
+                ${this.genre},<br>
+                ${this.publishing},<br>
+                ${this.librarySection},<br>
+                ${this.origin},<br>
+                ${this.available}`;
+          }
+        }
+        class Library {
+          static objectLibrary;
+          constructor() {
+            if (Library.objectLibrary) return Library.objectLibrary;
+            this.listBooks = [];
+            Library.objectLibrary = this;
+          }
+          addBook(newBook) {
+            this.listBooks.push(newBook);
+          }
+          removeBook(libNumber) {
+            this.listBooks = this.listBooks.filter(
+              (book) => book.regNumber !== libNumber
+            );
+          }
+          borrowBook(libNumber, whoBorrows) {
+            let book = this.listBooks.find(
+              (book) => book.regNumber === libNumber
+            );
+            book.available = `немає в наявності,позичив ${whoBorrows}`;
+          }
+          searchByTitleBook(title) {
+            let bookList = this.listBooks.filter(
+              (book) => book.title === title
+            );
+            return bookList.length
+              ? bookList
+              : "Книги за такою назвою немає в бібліотеці";
+          }
+          searchByAuthorName(searchName) {
+            let bookList = [];
+            for (const book of this.listBooks) {
+              for (const author of book.author) {
+                if (author.name === searchName) bookList.push(book);
+              }
+            }
+            return bookList.length
+              ? bookList
+              : "Книги за вказаним автором немає в бібліотеці";
+          }
+          searchByPublisher(searchName) {
+            let bookList = this.listBooks.filter(
+              (book) => book.publishing.companyName === searchName
+            );
+            return bookList.length
+              ? bookList
+              : "Книги за вказаним видавництвом немає в бібліотеці";
+          }
+          toString() {
+            return `${this.listBooks}`;
+          }
+        }
+        let library = new Library();
+        library.addBook(
+          new Book({
+            author: [
+              new Author({
+                name: "Nick Morgan",
+                birthYear: 1953,
+                description:
+                  "Американський мотиваційний спікер, коуч, професор і автор книг.",
+              }),
+            ],
+            title: "Java Script для дітей",
+            genre: "Програмування",
+            publishing: new Publishing({
+              companyName: "Видавництво Старого Лева",
+              regNumber: "ISBN 9781593274085",
+              yearPublication: 2018,
+            }),
+            librarySection: new LibrarySection({ title: "Програмування" }),
+            origin: "Куплена",
+            available: "в наявності",
+          })
+        );
+        library.addBook(
+          new Book({
+            author: [
+              new Author({
+                name: "Адитья Бхаргава",
+                birthYear: 1970,
+                description: "Інженер-програміст, автор книг.",
+              }),
+            ],
+            title: "Грокаем алгоритмы",
+            genre: "Програмування",
+            publishing: new Publishing({
+              companyName: "Питер",
+              regNumber: "ISBN 978 5446109234",
+              yearPublication: 2022,
+            }),
+            librarySection: new LibrarySection({ title: "Програмування" }),
+            origin: "Подарована",
+            available: "в наявності",
+          })
+        );
+        library.addBook(
+          new Book({
+            author: [
+              new Author({
+                name: "Джейми Чан",
+                birthYear: 1974,
+                description: "Інженер-програміст, автор книг.",
+              }),
+            ],
+            title: "Быстрый старт Python",
+            genre: "Програмування",
+            publishing: new Publishing({
+              companyName: "Питер",
+              regNumber: "ISBN 978 5446109239",
+              yearPublication: 2021,
+            }),
+            librarySection: new LibrarySection({ title: "Програмування" }),
+            origin: "Подарована",
+            available: "в наявності",
+          })
+        );
+        library.borrowBook(2, "племінник");
+        console.log(library.searchByPublisher("Питер"));
+        console.log(library.listBooks);
+        document.write(`${library}`);
+      </script>
+    </div>
+  </body>
+</html>
